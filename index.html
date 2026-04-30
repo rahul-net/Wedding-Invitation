@@ -1,40 +1,103 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul & Rupthi | Wedding Invitation</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <style>
-        :root {
-            --dark-green: #0b1a15;
-            --gold: #c5a059;
-            --gold-light: #f1d592;
-            --text-white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.05);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+<title>Rahul & Rupthi Wedding</title>
 
-        body {
-            background-color: var(--dark-green);
-            color: var(--text-white);
-            font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 
-        /* --- Music Controller --- */
-        .music-toggle {
-            position: fixed; top: 20px; right: 20px; z-index: 3000;
-            background: rgba(197, 160, 89, 0.2); border: 1px solid var(--gold);
-            width: 45px; height: 45px; border-radius: 50%;
-            display: none; justify-content: center; align-items: center;
-            cursor: pointer; color: var(--gold); font-size: 1.2rem;
+<!-- REQUIRED -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+body {
+    background: #0b1a15;
+    color: white;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    padding: 20px;
+}
+.btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.whatsapp { background: #25D366; color: white; }
+.download { background: gold; color: black; }
+</style>
+</head>
+
+<body>
+
+<h1>Rahul & Rupthi</h1>
+<p>Wedding Ceremony</p>
+
+<input id="guestName" placeholder="Your Name" style="padding:10px;width:100%;margin-top:20px;">
+
+<textarea id="guestMsg" placeholder="Write your message..." style="padding:10px;width:100%;margin-top:10px;"></textarea>
+
+<button class="btn whatsapp" onclick="sendToWhatsApp()">Send via WhatsApp</button>
+
+<button class="btn download" onclick="downloadInvitationCard()">Download Invitation Card</button>
+
+
+<!-- Hidden Card -->
+<div id="inviteCard" style="
+width:800px;
+height:1200px;
+background:#0b1a15;
+color:white;
+position:fixed;
+left:-9999px;
+top:0;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+font-family:'Cinzel',serif;
+">
+
+<h1 style="color:gold;">Rahul & Rupthi</h1>
+<p>Wedding Ceremony</p>
+<p>July 6, 2026</p>
+<p>12:10 AM</p>
+<p>Raj Hotel, Chittagong</p>
+
+</div>
+
+
+<script>
+
+function sendToWhatsApp() {
+    let name = document.getElementById('guestName').value;
+    let msg = document.getElementById('guestMsg').value;
+
+    let text = "Wedding RSVP\nName: " + name + "\nMessage: " + msg;
+
+    window.open("https://wa.me/2482591997?text=" + encodeURIComponent(text));
+}
+
+
+function downloadInvitationCard() {
+    html2canvas(document.getElementById("inviteCard")).then(canvas => {
+        let link = document.createElement("a");
+        link.download = "invitation.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
+</script>
+
+</body>
+</html>            cursor: pointer; color: var(--gold); font-size: 1.2rem;
             box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
         }
 
