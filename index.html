@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rahul & Rupthi | Wedding Invitation</title>
@@ -427,6 +428,7 @@
             const fullText = `Wedding RSVP\nName: ${name}\nStatus: ${status}\nMessage: ${msg}`;
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(fullText)}`, '_blank');
         }
+        
 
         function showModal() {
             const m = document.getElementById('msg-modal');
@@ -477,6 +479,14 @@
     </p>
 
 </div> 
+        function downloadInvitationCard() {
+    html2canvas(document.getElementById("inviteCard")).then(canvas => {
+        let a = document.createElement("a");
+        a.href = canvas.toDataURL();
+        a.download = "invitation.png";
+        a.click();
+    });
+        }
     </script>
 </body>
 </html>
