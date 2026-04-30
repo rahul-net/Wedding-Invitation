@@ -436,6 +436,47 @@
             m.dataset.shown = "true";
         }
         function closeModal() { gsap.to('#msg-modal', { opacity: 0, scale: 0.8, onComplete: () => document.getElementById('msg-modal').style.display='none' }); }
+   <!-- Hidden Invitation Card Template -->
+<div id="inviteCard" style="
+    width: 800px;
+    height: 1200px;
+    background: #0b1a15;
+    color: white;
+    position: fixed;
+    left: -9999px;
+    top: 0;
+    font-family: 'Cinzel', serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px;
+">
+
+    <h1 style="color: #c5a059; font-size: 48px; letter-spacing: 6px;">
+        Rahul & Rupthi
+    </h1>
+
+    <p style="margin-top: 20px; font-size: 20px; letter-spacing: 3px;">
+        Wedding Ceremony
+    </p>
+
+    <div style="width: 200px; height: 1px; background: #c5a059; margin: 25px 0;"></div>
+
+    <p style="font-size: 22px;">July 6, 2026</p>
+    <p style="margin-top: 10px; font-size: 18px;">12:10 AM</p>
+
+    <p style="margin-top: 30px; font-size: 18px; opacity: 0.8;">
+        Raj Hotel, Chittagong
+    </p>
+
+    <p style="margin-top: 40px; font-size: 16px; opacity: 0.7; line-height: 1.6;">
+        We request the honor of your presence<br>
+        at our wedding celebration.
+    </p>
+
+</div> 
     </script>
 </body>
 </html>
