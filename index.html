@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahul & Rupthi | Wedding Invitation</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --dark-green: #0b1a15;
+            --gold: #c5a059;
+            --gold-light: #f1d592;
+            --text-white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--dark-green);
+            color: var(--text-white);
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Music Controller --- */
+        .music-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 3000;
+            background: rgba(197, 160, 89, 0.2); border: 1px solid var(--gold);
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; color: var(--gold); font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
+            display: none; /* Hidden until invite opens */
+        }
+
+        /* --- Entrance --- */
+        #entrance {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark-green);
+            z-index: 2000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        .wax-seal {
+            width: 130px; height: 130px;
+            background: radial-gradient(circle, #2d4d42, #0b1a15);
+            border-radius: 50%; border: 2px solid var(--gold);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; box-shadow: 0 0 40px rgba(197, 160, 89, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(197, 160, 89, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); }
+        }
+        .wax-seal span { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); font-weight: bold; }
+
+        /* --- Main Content --- */
+        #main-content { display: none; opacity: 0; padding-bottom: 50px; }
+        .section { padding: 60px 20px; max-width: 500px; margin: 0 auto; }
+        .divider { width: 120px; height: 1px; background: var(--gold); margin: 25px auto; position: relative; opacity: 0.6; }
+        .divider::after { content: '🕉'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--dark-green); padding: 0 10px; color: var(--gold); }
+
+        h1.names { font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--gold); letter-spacing: 4px; margin: 15px 0; }
+        h3 { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: var(--gold-light); }
+
+        /* --- Scratch Card --- */
+        .scratch-wrapper {
+            position: relative; width: 300px; height: 150px; margin: 30px auto;
+            border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #000;
+        }
+        .scratch-base {
+            position: absolute; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0b1a15, #122a22); 
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; border: 1px solid var(--gold);
+        }
+        #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 10; cursor: crosshair; touch-action: none; }
+
+        /* --- Message Modal --- */
+        #msg-modal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+            width: 85%; max-width: 350px; background: #0b1a15; border: 2px solid var(--gold);
+            padding: 35px 25px; border-radius: 20px; z-index: 4000; display: none; opacity: 0;
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+        }
+        .modal-btn { background: var(--gold); color: #000; border: none; padding: 12px 25px; margin-top: 25px; border-radius: 50px; cursor: pointer; font-weight: bold; font-family: 'Cinzel', serif; }
+
+        /* --- Timer --- */
+        .timer-container { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+        .t-box { background: var(--glass); border: 1px solid rgba(197,160,89,0.2); width: 70px; padding: 12px 0; border-radius: 10px; }
+        .t-num { display: block; font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--gold); }
+        .t-lbl { font-size: 0.6rem; text-transform: uppercase; opacity: 0.6; letter-spacing: 1px; }
+
+        /* --- RSVP --- */
+        .form-card { background: var(--glass); padding: 25px; border-radius: 15px; text-align: left; border: 1px solid rgba(197,160,89,0.2); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--gold-light); margin-bottom: 5px; text-transform: uppercase; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(197,160,89,0.3); padding: 12px; color: #fff; border-radius: 5px; font-family: inherit; outline: none; }
+        .btn-send { width: 100%; background: var(--gold); color: #000; border: none; padding: 15px; font-family: 'Cinzel', serif; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; text-transform: uppercase; }
+
+        /* --- Reminder Section --- */
+        .reminder-box { background: rgba(197,160,89,0.05); border: 1px dashed var(--gold); padding: 20px; border-radius: 15px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music -->
+    <audio id="inviteMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+        <!-- বিকল্প হিসেবে একটি ক্লাসিক শেহনাই সুরের লিঙ্ক ব্যবহার করা যেতে পারে -->
+    </audio>
+
+    <div id="musicBtn" class="music-toggle" onclick="toggleMusic()">🔊</div>
+
+    <!-- Scratch Reward Modal -->
+    <div id="msg-modal">
+        <div style="font-size: 2rem; margin-bottom: 15px;">✉</div>
+        <h3 style="margin-bottom: 15px; color: var(--gold);">আমন্ত্রণ মেসেজ</h3>
+        <p style="font-size: 0.95rem; line-height: 1.8; opacity: 0.9; color: #fff;">
+            আমাদের জীবনের এই শুভ সূচনালগ্নে আপনার উপস্থিতি ও আশীর্বাদ আমাদের আনন্দকে বহুগুণ বাড়িয়ে দেবে। <br>
+            <strong>আপনার উপস্থিতি একান্ত কাম্য।</strong>
+        </p>
+        <button class="modal-btn" onclick="closeModal()">ধন্যবাদ</button>
+    </div>
+
+    <!-- Entrance Screen -->
+    <section id="entrance">
+        <div class="wax-seal" onclick="startExperience()">
+            <span>R&R</span>
+            <p style="font-size: 0.6rem; letter-spacing: 3px; color: var(--gold); margin-top: 10px;">OPEN INVITE</p>
+        </div>
+        <p style="position: absolute; bottom: 50px; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.5;">CLICK THE SEAL TO ENTER</p>
+    </section>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <section class="section">
+            <p style="font-size: 0.7rem; letter-spacing: 4px; color: var(--gold);">॥ শ্রী শ্রী প্রজাপতয়ে নমঃ ॥</p>
+            <h1 class="names">Rahul & Rupthi</h1>
+            <h3>শুভ বিবাহ</h3>
+            <div class="divider"></div>
+            
+            <!-- Scratch Card Area -->
+            <p style="font-size: 0.65rem; letter-spacing: 2px; color: var(--gold-light); margin-bottom: 15px; text-transform: uppercase;">✦ Scratch to Reveal Invitation ✦</p>
+            <div class="scratch-wrapper">
+                <div class="scratch-base">
+                    <p style="font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.8rem; letter-spacing: 2px;">SAVE THE DATE</p>
+                    <p style="font-size: 1.5rem; font-weight: bold; color: #fff;">JULY 06, 2026</p>
+                </div>
+                <canvas id="scratch-canvas"></canvas>
+            </div>
+        </section>
+
+        <!-- Countdown Timer -->
+        <section class="section" style="padding-top: 0;">
+            <div class="timer-container">
+                <div class="t-box"><span class="t-num" id="days">00</span><span class="t-lbl">Days</span></div>
+                <div class="t-box"><span class="t-num" id="hours">00</span><span class="t-lbl">Hrs</span></div>
+                <div class="t-box"><span class="t-num" id="mins">00</span><span class="t-lbl">Min</span></div>
+                <div class="t-box"><span class="t-num" id="secs">00</span><span class="t-lbl">Sec</span></div>
+            </div>
+        </section>
+
+        <!-- Wedding Schedule -->
+        <section class="section">
+            <h3 style="font-size: 2rem;">সূচীপত্র</h3>
+            <div class="divider"></div>
+            <div style="text-align: left; border-left: 2px solid var(--gold); padding-left: 25px; margin: 0 auto; max-width: 300px;">
+                <div style="margin-bottom: 30px; position: relative;">
+                    <div style="position: absolute; left: -31px; top: 5px; width: 10px; height: 10px; background: var(--gold); border-radius: 50%;"></div>
+                    <p style="color: var(--gold); font-size: 0.75rem; font-weight: bold;">৫ জুলাই, ২০২৬ • রাত ৯:০০</p>
+                    <p style="font-family: 'Cinzel', serif; font-size: 1.1rem;">বস্ত্রলঙ্কার ও আশীর্বাদ</p>
+                </div>
+                <div style="margin-bottom: 30px; position: relative;">
+                    <div style="position: absolute; left: -31px; top: 5px; width: 10px; height: 10px; background: var(--gold); border-radius: 50%;"></div>
+                    <p style="color: var(--gold); font-size: 0.75rem; font-weight: bold;">৬ জুলাই, ২০২৬ • রাত ১২:১০</p>
+                    <p style="font-family: 'Cinzel', serif; font-size: 1.1rem;">শুভ বিবাহ লগ্ন</p>
+                </div>
+                <div style="position: relative;">
+                    <div style="position: absolute; left: -31px; top: 5px; width: 10px; height: 10px; background: var(--gold); border-radius: 50%;"></div>
+                    <p style="color: var(--gold); font-size: 0.75rem; font-weight: bold;">৮ জুলাই, ২০২৬ • দুপুর ১২:০০</p>
+                    <p style="font-family: 'Cinzel', serif; font-size: 1.1rem;">প্রীতিভোজ ও রিসিপশন</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reminder Section -->
+        <section class="section">
+            <h3 style="font-size: 1.8rem;">Reminder</h3>
+            <div class="divider"></div>
+            <div class="reminder-box">
+                <p style="font-size: 0.9rem; opacity: 0.9;">এই বিশেষ দিনটি মনে রাখতে আপনার ফোনের ক্যালেন্ডারে রিমাইন্ডার সেট করে রাখুন।</p>
+                <button style="background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px 25px; margin-top: 20px; cursor: pointer; border-radius: 5px;" onclick="alert('আপনার ক্যালেন্ডারে যুক্ত করা হচ্ছে...')">ক্যালেন্ডারে যোগ করুন</button>
+            </div>
+        </section>
+
+        <!-- RSVP Form -->
+        <section class="section">
+            <h3 style="font-size: 2rem;">শুভেচ্ছা বার্তা</h3>
+            <div class="divider"></div>
+            <div class="form-card">
+                <div class="form-group">
+                    <label>আপনার নাম</label>
+                    <input type="text" id="gName" placeholder="আপনার নাম লিখুন">
+                </div>
+                <div class="form-group">
+                    <label>আপনি কি উপস্থিত থাকবেন?</label>
+                    <select id="gStatus">
+                        <option value="হ্যাঁ, আমি আসছি">হ্যাঁ, আমি থাকব</option>
+                        <option value="চেষ্টা করব আসার">চেষ্টা করব আসার</option>
+                        <option value="দুঃখিত, আসতে পারছি না">দুঃখিত, আসতে পারছি না</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>মেসেজ</label>
+                    <textarea id="gMessage" rows="3" placeholder="বর-কনের জন্য কিছু লিখুন..."></textarea>
+                </div>
+                <button class="btn-send" onclick="sendRSVP()">Send via SMS</button>
+            </div>
+        </section>
+
+        <footer style="margin-top: 50px; opacity: 0.4; font-size: 0.65rem; letter-spacing: 4px;">
+            RAHUL & RUPTHI • JULY 2026
+        </footer>
+    </div>
+
+    <script>
+        const audio = document.getElementById('inviteMusic');
+        const musicBtn = document.getElementById('musicBtn');
+
+        function startExperience() {
+            // Entrance transition
+            document.getElementById('entrance').style.transform = 'translateY(-100%)';
+            
+            setTimeout(() => {
+                document.getElementById('main-content').style.display = 'block';
+                musicBtn.style.display = 'flex';
+                gsap.to('#main-content', { opacity: 1, duration: 1.2 });
+                
+                // Play music
+                audio.play().catch(error => {
+                    console.log("Auto-play blocked by browser. Music will start after interaction.");
+                });
+                
+                setupScratch();
+            }, 600);
+        }
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.innerText = "🔊";
+            } else {
+                audio.pause();
+                musicBtn.innerText = "🔇";
+            }
+        }
+
+        // --- Scratch Logic ---
+        function setupScratch() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 300; canvas.height = 150;
+
+            // Paint the gold cover
+            ctx.fillStyle = '#c5a059';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Texture for the gold
+            ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+            for(let i=0; i<canvas.width; i+=5) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+            }
+
+            ctx.fillStyle = '#0b1a15';
+            ctx.font = 'bold 12px Montserrat';
+            ctx.textAlign = 'center';
+            ctx.fillText('SCRATCH TO REVEAL MESSAGE', 150, 80);
+
+            let isRevealed = false;
+            let scratchedAmount = 0;
+
+            function scratch(e) {
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.pageX || (e.touches && e.touches[0].pageX)) - rect.left;
+                const y = (e.pageY || (e.touches && e.touches[0].pageY)) - rect.top;
+                
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 22, 0, Math.PI * 2);
+                ctx.fill();
+
+                scratchedAmount++;
+                if(scratchedAmount > 100 && !isRevealed) {
+                    showInvitationModal();
+                }
+            }
+
+            let active = false;
+            canvas.addEventListener('mousedown', () => active = true);
+            canvas.addEventListener('mouseup', () => active = false);
+            canvas.addEventListener('mousemove', (e) => active && scratch(e));
+            
+            canvas.addEventListener('touchstart', (e) => { active = true; scratch(e); });
+            canvas.addEventListener('touchend', () => active = false);
+            canvas.addEventListener('touchmove', (e) => { scratch(e); e.preventDefault(); });
+        }
+
+        function showInvitationModal() {
+            const modal = document.getElementById('msg-modal');
+            if(modal.dataset.shown === "true") return;
+            
+            setTimeout(() => {
+                modal.style.display = 'block';
+                gsap.to(modal, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" });
+                modal.dataset.shown = "true";
+            }, 400);
+        }
+
+        function closeModal() {
+            gsap.to('#msg-modal', { opacity: 0, scale: 0.8, duration: 0.3, onComplete: () => {
+                document.getElementById('msg-modal').style.display = 'none';
+            }});
+        }
+
+        // --- Countdown Timer ---
+        const weddingDate = new Date("July 06, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            document.getElementById('days').innerText = String(Math.floor(diff / (1000*60*60*24))).padStart(2, '0');
+            document.getElementById('hours').innerText = String(Math.floor((diff % (1000*60*60*24)) / (1000*60*60))).padStart(2, '0');
+            document.getElementById('mins').innerText = String(Math.floor((diff % (1000*60*60)) / (1000*60))).padStart(2, '0');
+            document.getElementById('secs').innerText = String(Math.floor((diff % (1000*60)) / 1000)).padStart(2, '0');
+        }, 1000);
+
+        // --- SMS RSVP ---
+        function sendRSVP() {
+            const name = document.getElementById('gName').value;
+            const status = document.getElementById('gStatus').value;
+            const msg = document.getElementById('gMessage').value;
+            const phone = "+8801825178887";
+
+            if(!name) { alert("অনুগ্রহ করে আপনার নাম লিখুন।"); return; }
+
+            const smsContent = `Wedding RSVP\nName: ${name}\nStatus: ${status}\nMessage: ${msg}`;
+            const ua = navigator.userAgent.toLowerCase();
+            const url = (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1) 
+                ? `sms:${phone}&body=${encodeURIComponent(smsContent)}` 
+                : `sms:${phone}?body=${encodeURIComponent(smsContent)}`;
+            
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
