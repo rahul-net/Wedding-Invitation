@@ -94,6 +94,16 @@
     transform: scale(1.03);
     box-shadow: 0 10px 20px rgba(197,160,89,0.4);
 }
+        .map-btn {
+    display: inline-block;
+    margin-top: 15px;
+    background: #0b1a15;
+    border: 1px solid #c5a059;
+    color: #c5a059;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+        }
 
         /* --- Gallery Slider --- */
         .slideshow { position: relative; height: 400px; border-radius: 20px; overflow: hidden; border: 1px solid var(--gold); margin-top: 20px; }
@@ -295,6 +305,11 @@
                 </div>
             </div>
         </section>
+
+            <a href="https://www.google.com/maps/search/?api=1&query=Raj+Hotel+Chittagong" 
+target="_blank" class="map-btn">
+    📍 Get Directions
+            </a>
 
         <!-- Scratch Surprise -->
         <section class="section">
@@ -555,6 +570,7 @@
         snow.remove();
     }, duration * 1000);
 }
+    
 
 // continuous snow
 setInterval(createSnow, 200);
