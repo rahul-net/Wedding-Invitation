@@ -201,8 +201,11 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop><source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8f5e0c2.mp3?filename=wedding-piano-110624.mp3" type="audio/mpeg"></audio>
-    <div id="musicBtn" class="music-toggle" onclick="toggleMusic()">🔊</div>
+    <audio id="bgMusic" loop preload="auto" playsinline>
+    <source src="wedding.mp3" type="audio/mpeg">
+</audio>
+
+<div id="musicBtn" class="music-toggle" onclick="toggleMusic()">🔊</div>
 
     <!-- Entrance Section -->
     <section id="entrance">
