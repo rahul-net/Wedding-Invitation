@@ -26,6 +26,61 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
+        /* Door Container */
+.door-container {
+    position: relative;
+    width: 220px;
+    height: 320px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+/* Doors */
+.door {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(145deg, #1a2f28, #0b1a15);
+    border: 2px solid #c5a059;
+    transition: transform 1s ease-in-out;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}
+
+/* Left door */
+.left-door {
+    left: 0;
+    transform-origin: left;
+}
+
+/* Right door */
+.right-door {
+    right: 0;
+    transform-origin: right;
+}
+
+/* Open animation */
+.open .left-door {
+    transform: rotateY(-110deg);
+}
+
+.open .right-door {
+    transform: rotateY(110deg);
+}
+
+/* Text */
+.door-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c5a059;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    z-index: 2;
+}
 
         /* --- Music Controller --- */
         .music-toggle {
@@ -259,11 +314,13 @@ input, textarea, select {
 
     <!-- Entrance Section -->
     <section id="entrance">
-        <div class="wax-seal" onclick="openInvite()">
-            <span>R&R</span>
-            <p style="font-size: 0.6rem; letter-spacing: 2px; color: var(--gold); margin-top: 8px;">OPEN</p>
-        </div>
-        <p style="margin-top: 30px; opacity: 0.5; font-size: 0.7rem; letter-spacing: 2px;">INVITATION FOR YOU</p>
+    <div class="door-container" onclick="openInvite()">
+        
+        <div class="door left-door"></div>
+        <div class="door right-door"></div>
+
+        <div class="door-text">OPEN DOOR</div>
+    </div>
     </section>
 
     <!-- Main Content -->
@@ -495,18 +552,25 @@ target="_blank" class="map-btn">
         const apiKey = ""; // API Key handled by environment
 
         function openInvite() {
-            document.getElementById('entrance').style.transform = 'translateY(-100%)';
-            setTimeout(() => {
-                document.getElementById('main-content').style.display = 'block';
-                document.getElementById('musicBtn').style.display = 'flex';
-                gsap.to('#main-content', { opacity: 1, duration: 1.2 });
-                audio.play().catch(e => console.log("Audio blocked"));
-                initScratch();
-                initSlides();
-                startCountdown();
-                setInterval(createSnow, 200);
-            }, 600);
-        }
+    const door = document.querySelector('.door-container');
+
+    // add open class (animation start)
+    door.classList.add("open");
+
+    // delay দিয়ে main content show
+    setTimeout(() => {
+        document.getElementById('entrance').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        document.getElementById('musicBtn').style.display = 'flex';
+
+        gsap.to('#main-content', { opacity: 1, duration: 1.2 });
+
+        audio.play().catch(() => {});
+        initScratch();
+        initSlides();
+        startCountdown();
+    }, 1000);
+}
 
         function toggleMusic() {
             if(audio.paused) { audio.play(); document.getElementById('musicBtn').innerText = "🔊"; }
