@@ -26,12 +26,32 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
-        /* Door Container */
+        /* Wrapper */
+.door-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Title */
+.door-title {
+    color: #f1d592;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0;
+}
+
+/* Door container */
 .door-container {
     position: relative;
     width: 220px;
     height: 320px;
-    perspective: 1000px;
+    perspective: 1200px;
     cursor: pointer;
 }
 
@@ -42,8 +62,8 @@
     height: 100%;
     background: linear-gradient(145deg, #1a2f28, #0b1a15);
     border: 2px solid #c5a059;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.8);
     transition: transform 1s ease-in-out;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
 }
 
 /* Left door */
@@ -67,7 +87,7 @@
     transform: rotateY(110deg);
 }
 
-/* Text */
+/* Door text */
 .door-text {
     position: absolute;
     width: 100%;
@@ -77,9 +97,20 @@
     justify-content: center;
     color: #c5a059;
     font-family: 'Cinzel', serif;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     font-size: 0.9rem;
     z-index: 2;
+}
+
+/* subtle glow */
+.door-container::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 5px;
+    background: rgba(197,160,89,0.1);
+    filter: blur(10px);
+    z-index: -1;
 }
 
         /* --- Music Controller --- */
@@ -314,12 +345,21 @@ input, textarea, select {
 
     <!-- Entrance Section -->
     <section id="entrance">
-    <div class="door-container" onclick="openInvite()">
-        
-        <div class="door left-door"></div>
-        <div class="door right-door"></div>
+    <div class="door-wrapper">
 
-        <div class="door-text">OPEN DOOR</div>
+        <!-- Title -->
+        <p class="door-title">
+            You are warmly welcomed to the beginning of a new chapter in Rahul & Rupthi's life
+        </p>
+
+        <!-- Door -->
+        <div class="door-container" onclick="openInvite()">
+            <div class="door left-door"></div>
+            <div class="door right-door"></div>
+
+            <div class="door-text">OPEN DOOR</div>
+        </div>
+
     </div>
     </section>
 
@@ -554,10 +594,10 @@ target="_blank" class="map-btn">
         function openInvite() {
     const door = document.querySelector('.door-container');
 
-    // add open class (animation start)
+    // animate door open
     door.classList.add("open");
 
-    // delay দিয়ে main content show
+    // delay → then show content
     setTimeout(() => {
         document.getElementById('entrance').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
@@ -569,7 +609,9 @@ target="_blank" class="map-btn">
         initScratch();
         initSlides();
         startCountdown();
+
     }, 1000);
+        }
 }
 
         function toggleMusic() {
@@ -733,6 +775,12 @@ document.addEventListener("keydown", function(e) {
 function scrollToTop() {
     document.getElementById("home").scrollIntoView({ behavior: "smooth" });
 }
+        gsap.to(".door-title", {
+    opacity: 1,
+    y: -10,
+    duration: 1.2,
+    delay: 0.5
+});
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
