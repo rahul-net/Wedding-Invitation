@@ -584,7 +584,9 @@ target="_blank" class="map-btn">
         const audio = document.getElementById('bgMusic');
         const apiKey = ""; // API Key handled by environment
 
-        function openInvite() {
+        let snowStarted = false;
+
+function openInvite() {
 
     const intro = document.getElementById('entrance');
 
@@ -602,6 +604,12 @@ target="_blank" class="map-btn">
         initScratch();
         initSlides();
         startCountdown();
+
+        // 👇 এইটাই missing ছিল
+        if (!snowStarted) {
+            setInterval(createSnow, 250);
+            snowStarted = true;
+        }
 
     }, 800);
 }
