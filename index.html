@@ -27,6 +27,31 @@
             line-height: 1.6;
         }
 
+        /* wrapper */
+.enter-wrap {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* text নিচে */
+.tap-text {
+    margin-top: 10px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: #c5a059;
+    opacity: 0.8;
+    font-family: 'Cinzel', serif;
+}
+        .tap-text {
+    animation: fadeBlink 1.5s infinite;
+}
+
+@keyframes fadeBlink {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
         /* --- Music Controller --- */
         .music-toggle {
             position: fixed; top: 20px; right: 20px; z-index: 3000;
@@ -325,11 +350,10 @@ input, textarea, select {
         </p>
 
         <!-- Bottom circle button -->
-        <div class="enter-btn">
-            ●
+        <div class="enter-wrap">
+    <div class="enter-btn">●</div>
+    <p class="tap-text">Tap to Open</p>
         </div>
-
-    </div>
 
     </section>
 
