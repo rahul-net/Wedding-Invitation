@@ -197,6 +197,36 @@
         transform: translateY(110vh);
     }
 }
+        /* Disable text selection */
+body {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Prevent image long-press save (mobile) */
+img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
+/* Optional: allow form inputs/select to still work */
+input, textarea, select {
+    user-select: text;
+    pointer-events: auto;
+}
+        .img-wrap {
+    position: relative;
+}
+
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
     </style>
 </head>
 <body>
@@ -434,6 +464,11 @@ target="_blank" class="map-btn">
         <p style="font-size: 0.9rem; line-height: 1.6;">আপনার উপস্থিতি আমাদের জীবনের এই নতুন যাত্রাকে আরও আনন্দময় করে তুলবে। দেখা হবে বিয়ের আসরে!</p>
         <button class="ai-btn" style="margin-top: 20px; width: auto; padding: 10px 30px;" onclick="closeModal()">ধন্যবাদ</button>
     </div>
+    
+    <div class="img-wrap">
+    <img src="your-image.jpg">
+    <div class="img-overlay"></div>
+    </div>
 
     <script>
         const audio = document.getElementById('bgMusic');
@@ -586,6 +621,28 @@ target="_blank" class="map-btn">
 
 // continuous snow
 setInterval(createSnow, 200);
+        // Disable right click
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// Disable copy
+document.addEventListener("copy", e => e.preventDefault());
+
+// Disable cut
+document.addEventListener("cut", e => e.preventDefault());
+
+// Disable select (extra safety)
+document.addEventListener("selectstart", e => e.preventDefault());
+
+// Disable common devtools shortcuts
+document.addEventListener("keydown", function(e) {
+    if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key)) ||
+        (e.ctrlKey && e.key === "U")
+    ) {
+        e.preventDefault();
+    }
+});
     </script>
 </body>
 </html>
