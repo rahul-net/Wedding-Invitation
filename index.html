@@ -130,7 +130,13 @@
     100% { transform: scale(1); opacity: 1; }
 }
         /* --- Layout Sections --- */
-        #main-content { display: none; opacity: 0; padding-bottom: 50px; }
+        #main-content {
+    display: none;
+    opacity: 0;
+    padding-bottom: 50px;
+    position: relative;
+    z-index: 2;
+        }
         .section { padding: 60px 20px; max-width: 500px; margin: 0 auto; }
         .divider { width: 120px; height: 1px; background: var(--gold); margin: 25px auto; position: relative; opacity: 0.6; }
         .divider::after { content: '💍'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--dark-green); padding: 0 10px; color: var(--gold); }
@@ -277,19 +283,17 @@
 .snowflake {
     position: fixed;
     top: -10px;
-    color: #ffffff;
+    color: rgba(255,255,255,0.7);
     font-size: 10px;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 0;
     user-select: none;
+
     animation-name: fall;
     animation-timing-function: linear;
-}
 
-@keyframes fall {
-    to {
-        transform: translateY(110vh);
-    }
+    opacity: 0.6;
+    filter: blur(0.5px);
 }
         /* Disable text selection */
 body {
