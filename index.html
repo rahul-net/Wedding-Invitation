@@ -104,6 +104,17 @@
     border-radius: 8px;
     text-decoration: none;
         }
+        #topBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #c5a059;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    display: none;
+    z-index: 9999;
+        }
 
         /* --- Gallery Slider --- */
         .slideshow { position: relative; height: 400px; border-radius: 20px; overflow: hidden; border: 1px solid var(--gold); margin-top: 20px; }
@@ -643,6 +654,16 @@ document.addEventListener("keydown", function(e) {
         e.preventDefault();
     }
 });
+        window.onscroll = () => {
+    document.getElementById("topBtn").style.display =
+        window.scrollY > 200 ? "block" : "none";
+};
+
+function scrollToTop() {
+    document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+}
+        
     </script>
+    <button id="topBtn" onclick="scrollToTop()">⬆</button>
 </body>
 </html>
