@@ -590,7 +590,12 @@ target="_blank" class="map-btn">
     <script>
         const audio = document.getElementById('bgMusic');
         const apiKey = ""; // API Key handled by environment
-
+        
+        gsap.to(".door-title", {
+    opacity: 1,
+    y: -10,
+    duration: 1
+});
         function openInvite() {
     const door = document.querySelector('.door-container');
 
@@ -774,13 +779,7 @@ document.addEventListener("keydown", function(e) {
 
 function scrollToTop() {
     document.getElementById("home").scrollIntoView({ behavior: "smooth" });
-}
-        gsap.to(".door-title", {
-    opacity: 1,
-    y: -10,
-    duration: 1.2,
-    delay: 0.5
-});
+} 
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
