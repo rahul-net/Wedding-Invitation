@@ -74,13 +74,68 @@
 }
 
 .card {
+    position: relative;
     border: 2px solid #c5a059;
     padding: 40px 20px;
-    text-align: center;
-    width: 90%;
-    max-width: 350px;
     background: #000;
-    box-shadow: 0 0 30px rgba(197,160,89,0.2);
+    overflow: hidden;
+}
+
+/* TEXT ALWAYS TOP */
+.card-content {
+    position: relative;
+    z-index: 5;
+}
+
+/* 🔥 BORDER LIGHT EFFECT */
+.border-light {
+    position: absolute;
+    inset: -2px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 3;
+
+    background: linear-gradient(90deg, red, yellow, green, cyan, blue, magenta, red);
+    background-size: 300% 300%;
+
+    filter: blur(6px);
+    opacity: 0.6;
+
+    animation: borderGlow 6s linear infinite;
+}
+
+@keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* 💨 SMOKE */
+.smoke-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    z-index: 2;
+    pointer-events: none;
+
+    background: radial-gradient(circle at bottom, rgba(255,255,255,0.15), transparent 70%);
+    filter: blur(25px);
+
+    animation: smokeMove 6s ease-in-out infinite alternate;
+}
+
+@keyframes smokeMove {
+    0% { transform: translateY(20px); opacity: 0.3; }
+    100% { transform: translateY(-20px); opacity: 0.7; }
+}
+
+/* ✨ PARTICLES */
+#particles {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .ornament {
@@ -349,24 +404,34 @@ input, textarea, select {
 
     <div class="card">
 
-        <!-- Top ornament (optional image) -->
+    <!-- 🔥 BORDER LIGHT -->
+    <div class="border-light"></div>
+
+    <!-- 💨 SMOKE LAYER -->
+    <div class="smoke-layer"></div>
+
+    <!-- ✨ PARTICLES -->
+    <canvas id="particles"></canvas>
+
+    <!-- 📝 CONTENT (TOP LAYER) -->
+    <div class="card-content">
         <div class="ornament">💍</div>
 
-        <!-- Names -->
         <h1 class="names">
             Rahul <span>and</span> Rupthi
         </h1>
 
-        <!-- Sub text -->
         <p class="invite-text">
             invite you to celebrate their Wedding
         </p>
 
-        <!-- Bottom circle button -->
         <div class="enter-wrap">
-    <div class="enter-btn">●</div>
-    <p class="tap-text">Tap to Open</p>
+            <div class="enter-btn">●</div>
+            <p class="tap-text">Tap to Open</p>
         </div>
+    </div>
+
+</div>
 
     </section>
 
@@ -752,6 +817,54 @@ function openInvite() {
         snow.remove();
     }, duration * 1000);
 }
+        // ===== PARTICLES =====
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+function resizeParticles() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+}
+resizeParticles();
+window.addEventListener("resize", resizeParticles);
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2,
+        d: Math.random() * 1
+    });
+}
+
+function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+
+    particles.forEach(p => {
+        ctx.moveTo(p.x, p.y);
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    });
+
+    ctx.fill();
+    updateParticles();
+}
+
+function updateParticles() {
+    particles.forEach(p => {
+        p.y -= p.d;
+        if (p.y < 0) {
+            p.y = canvas.height;
+            p.x = Math.random() * canvas.width;
+        }
+    });
+}
+
+setInterval(drawParticles, 33);
 
         
         // Disable right click
