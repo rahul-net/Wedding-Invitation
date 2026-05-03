@@ -517,8 +517,8 @@ input, textarea, select {
             <div class="divider"></div>
             <div style="background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid rgba(197, 160, 89, 0.2); text-align: left;">
                 <p id="storyText" style="font-size: 0.95rem; line-height: 1.8; color: #eee; font-style: italic;">
-    আমাদের পরিচয়ের সেই সুন্দর দিনটি আজ এক নতুন অধ্যায়ে পদার্পণ করছে। আমাদের এই পথচলায় আপনার আশীর্বাদ ও উপস্থিতি কামনা করি।
-                </p>
+আমাদের পরিচয়ের সেই সুন্দর দিনটি আজ এক নতুন অধ্যায়ে পদার্পণ করছে। আমাদের এই পথচলায় আপনার আশীর্বাদ ও উপস্থিতি কামনা করি।
+</p>
                 <div style="text-align: right; margin-top: 15px; color: var(--gold); font-family: 'Great Vibes'; font-size: 1.5rem;">
                     — Love, Rahul & Rupthi
                 </div>
@@ -846,6 +846,27 @@ function openInvite() {
         snow.remove();
     }, duration * 1000);
 }
+        // ===== TYPEWRITER =====
+function typeStory() {
+    const el = document.getElementById("storyText");
+    if (!el) return;
+
+    const text = el.innerText;
+    el.innerText = "";
+
+    let i = 0;
+
+    function typing() {
+        if (i < text.length) {
+            el.innerText += text.charAt(i);
+            i++;
+            setTimeout(typing, 35);
+        }
+    }
+
+    typing();
+}
+        
         // ===== PARTICLES =====
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
@@ -936,6 +957,23 @@ window.addEventListener("scroll", () => {
         storyTyped = true;
     }
 });
+
+        let storyTyped = false;
+
+function checkStory() {
+    const story = document.getElementById("storyText");
+    if (!story || storyTyped) return;
+
+    const rect = story.getBoundingClientRect();
+
+    if (rect.top < window.innerHeight - 50) {
+        typeStory();
+        storyTyped = true;
+    }
+}
+
+window.addEventListener("scroll", checkStory);
+window.addEventListener("load", checkStory);
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
