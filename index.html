@@ -334,6 +334,35 @@
             box-shadow: 0 0 100px rgba(0,0,0,0.8);
         }
         
+        #storyText::after {
+    content: "|";
+    animation: blink 1s infinite;
+    margin-left: 3px;
+}
+
+@keyframes blink {
+    0%,100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+        // ===== TYPEWRITER EFFECT =====
+function typeStory() {
+    const el = document.getElementById("storyText");
+    const text = el.innerText;
+    el.innerText = "";
+
+    let i = 0;
+
+    function typing() {
+        if (i < text.length) {
+            el.innerText += text.charAt(i);
+            i++;
+            setTimeout(typing, 35); // speed control
+        }
+    }
+
+    typing();
+}
+        
         /* --- Snowfall Effect --- */
 .snowflake {
     position: fixed;
@@ -487,8 +516,8 @@ input, textarea, select {
             <h3>Our Story</h3>
             <div class="divider"></div>
             <div style="background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid rgba(197, 160, 89, 0.2); text-align: left;">
-                <p style="font-size: 0.95rem; line-height: 1.8; color: #eee; font-style: italic;">
-                    "আমাদের পরিচয়ের সেই সুন্দর দিনটি আজ এক নতুন অধ্যায়ে পদার্পণ করছে। আমাদের এই পথচলায় আপনার আশীর্বাদ ও উপস্থিতি কামনা করি।"
+                <p id="storyText" style="font-size: 0.95rem; line-height: 1.8; color: #eee; font-style: italic;">
+    আমাদের পরিচয়ের সেই সুন্দর দিনটি আজ এক নতুন অধ্যায়ে পদার্পণ করছে। আমাদের এই পথচলায় আপনার আশীর্বাদ ও উপস্থিতি কামনা করি।
                 </p>
                 <div style="text-align: right; margin-top: 15px; color: var(--gold); font-family: 'Great Vibes'; font-size: 1.5rem;">
                     — Love, Rahul & Rupthi
@@ -897,6 +926,16 @@ document.addEventListener("keydown", function(e) {
 function scrollToTop() {
     document.getElementById("home").scrollIntoView({ behavior: "smooth" });
 }
+        let storyTyped = false;
+
+window.addEventListener("scroll", () => {
+    const story = document.getElementById("storyText");
+
+    if (!storyTyped && story && story.getBoundingClientRect().top < window.innerHeight - 100) {
+        typeStory();
+        storyTyped = true;
+    }
+});
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
