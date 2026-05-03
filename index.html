@@ -72,6 +72,22 @@
     justify-content: center;
     z-index: 9999;
 }
+        #entrance {
+    position: relative;
+    overflow: hidden;
+}
+
+#gold-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.card {
+    position: relative;
+    z-index: 2;
+}
 
 .card {
     border: 2px solid #c5a059;
@@ -346,6 +362,8 @@ input, textarea, select {
 
     <!-- Entrance Section -->
     <section id="entrance" class="royal-intro" onclick="openInvite()">
+
+        <canvas id="gold-bg"></canvas>
 
     <div class="card">
 
@@ -784,6 +802,50 @@ document.addEventListener("keydown", function(e) {
 function scrollToTop() {
     document.getElementById("home").scrollIntoView({ behavior: "smooth" });
 }
+        // ===== GOLD PARTICLES (ENTRANCE ONLY) =====
+const canvasBg = document.getElementById("gold-bg");
+const ctxBg = canvasBg.getContext("2d");
+
+function resizeBg() {
+    canvasBg.width = canvasBg.offsetWidth;
+    canvasBg.height = canvasBg.offsetHeight;
+}
+resizeBg();
+
+let stars = [];
+
+for (let i = 0; i < 120; i++) {
+    stars.push({
+        x: Math.random() * canvasBg.width,
+        y: Math.random() * canvasBg.height,
+        size: Math.random() * 2,
+        speed: Math.random() * 0.3
+    });
+}
+
+function drawStars() {
+    ctxBg.clearRect(0, 0, canvasBg.width, canvasBg.height);
+
+    stars.forEach(s => {
+        ctxBg.beginPath();
+        ctxBg.fillStyle = "#d4af37";
+        ctxBg.shadowBlur = 8;
+        ctxBg.shadowColor = "#d4af37";
+        ctxBg.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctxBg.fill();
+
+        s.y -= s.speed;
+
+        if (s.y < 0) {
+            s.y = canvasBg.height;
+            s.x = Math.random() * canvasBg.width;
+        }
+    });
+
+    requestAnimationFrame(drawStars);
+}
+
+drawStars();
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
