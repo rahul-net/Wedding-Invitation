@@ -438,7 +438,7 @@ input, textarea, select {
             <div class="slideshow">
                 <div class="slide active"><img src="https://images.unsplash.com/photo-1777554800812-3dff04d85db0?auto=format&fit=crop&w=800&q=80" alt="Rahul & Rupthi 1"></div>
                 <div class="slide"><img src="https://images.unsplash.com/photo-1777554972735-c23d34f58a81?auto=format&fit=crop&w=800&q=80" alt="Rahul & Rupthi 2"></div>
-                <div class="slide"><img src="CP1.png" alt="Rahul & Rupthi 3"></div>
+                <div class="slide"><img src="CP1.jpg" alt="Rahul & Rupthi 3"></div>
             </div>
         </section>
 
@@ -686,25 +686,28 @@ function openInvite() {
             }, 3500);
         }
 
-        // --- AI Wish Logic ---
-        async function generateAIWish() {
-            const topic = document.getElementById('aiInput').value || "beautiful";
-            const btn = document.getElementById('aiBtn');
-            btn.innerText = "Writing..."; btn.disabled = true;
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Write a very short, warm wedding wish for Rahul and Rupthi. Theme: ${topic}. Max 15 words.` }] }]
-                    })
-                });
-                const data = await response.json();
-                const wish = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                if(wish) document.getElementById('guestMsg').value = wish.trim();
-            } catch (err) { alert("AI Wish generator is currently sleeping. Write something from heart!"); }
-            finally { btn.innerText = "Generate Wedding Wish"; btn.disabled = false; }
-        }
+        // --- AI Wish Logic (Offline Working Version) ---
+async function generateAIWish() {
+    const topic = document.getElementById('aiInput').value || "beautiful";
+    const btn = document.getElementById('aiBtn');
+
+    btn.innerText = "Writing...";
+    btn.disabled = true;
+
+    const wishes = {
+        heartfelt: "Wishing you a lifetime of love and happiness ❤️",
+        funny: "Marriage: where 'yes dear' becomes a daily ritual 😄",
+        poetic: "Two hearts, one journey, endless love forever ✨",
+        beautiful: "May your love grow stronger with each passing day 💍"
+    };
+
+    const key = topic.toLowerCase();
+    document.getElementById('guestMsg').value =
+        wishes[key] || wishes["beautiful"];
+
+    btn.innerText = "Generate Wedding Wish";
+    btn.disabled = false;
+}
 
         // --- WhatsApp Logic ---
         function sendToWhatsApp() {
