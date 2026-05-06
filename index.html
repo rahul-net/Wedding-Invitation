@@ -458,6 +458,54 @@ input, textarea, select {
     cursor: pointer;
     z-index: 10001;
 }
+        /* ===== Premium Golden Shimmer Effect ===== */
+
+.names,
+h3,
+.nav-title,
+.calendar-btn,
+.download-btn,
+.map-btn,
+.tap-text,
+.t-num,
+.form-group label,
+.invite-text {
+    position: relative;
+
+    background: linear-gradient(
+        120deg,
+        #8a6a2f 0%,
+        #c5a059 25%,
+        #fff2c2 45%,
+        #f1d592 50%,
+        #fff7dc 55%,
+        #c5a059 75%,
+        #8a6a2f 100%
+    );
+
+    background-size: 250% auto;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: goldShine 4s linear infinite;
+}
+
+/* Smooth shimmer movement */
+@keyframes goldShine {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+        .names,
+h3,
+.nav-title {
+    filter: drop-shadow(0 0 8px rgba(241, 213, 146, 0.35));
+}
+        
     </style>
 </head>
 <body>
