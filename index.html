@@ -334,6 +334,199 @@ input, textarea, select {
     width: 100%;
     height: 100%;
 }
+        /* ===== Luxury Menu Button ===== */
+.luxury-menu-btn{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(197,160,89,0.5);
+    background: rgba(11,26,21,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(197,160,89,0.25);
+}
+
+.luxury-menu-btn span{
+    color: #c5a059;
+    font-size: 22px;
+}
+
+/* ===== Luxury Popup ===== */
+.luxury-popup{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 99998;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.luxury-popup.active{
+    display: flex;
+    animation: fadeLuxury 0.5s ease;
+}
+
+@keyframes fadeLuxury{
+    from{
+        opacity:0;
+        transform:scale(0.96);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.close-luxury{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid #d4af37;
+    background: rgba(255,255,255,0.05);
+    color: #d4af37;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* ===== Premium Card ===== */
+.luxury-wrapper{
+    width:100%;
+    max-width:420px;
+}
+
+.invitation-container{
+    width: 100%;
+    max-width: 420px;
+    min-height: 780px;
+    background: #fdfaf2;
+    position: relative;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.8),
+    inset 0 0 50px rgba(212,175,55,0.05);
+    padding: 40px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    border:1px solid rgba(212,175,55,0.3);
+    overflow:hidden;
+}
+
+.bg-glow{
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+    filter:blur(50px);
+    z-index:-1;
+}
+
+.corner{
+    position:absolute;
+    width:100px;
+    height:100px;
+    fill:#d4af37;
+    opacity:0.6;
+}
+
+.top-left{top:10px;left:10px;}
+.top-right{top:10px;right:10px;transform:rotate(90deg);}
+.bottom-left{bottom:10px;left:10px;transform:rotate(-90deg);}
+.bottom-right{bottom:10px;right:10px;transform:rotate(180deg);}
+
+.gold-text{
+    background: linear-gradient(
+    90deg,
+    #996515,
+    #d4af37,
+    #fdfaf2,
+    #d4af37,
+    #996515
+    );
+    background-size:200% auto;
+    color:transparent;
+    -webkit-background-clip:text;
+    background-clip:text;
+    animation: shimmerGold 5s linear infinite;
+    font-weight:bold;
+}
+
+@keyframes shimmerGold{
+    0%{background-position:-200% center;}
+    100%{background-position:200% center;}
+}
+
+.lux-divider{
+    width:150px;
+    height:1px;
+    background:linear-gradient(
+    90deg,
+    transparent,
+    #d4af37,
+    transparent
+    );
+    margin:20px 0;
+    opacity:0.5;
+}
+
+.monogram{
+    width:280px;
+    height:280px;
+    border:1px solid #d4af37;
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    margin:30px 0;
+    box-shadow:0 0 20px rgba(212,175,55,0.1);
+}
+
+.monogram::before{
+    content:'';
+    position:absolute;
+    inset:-12px;
+    border:0.5px solid rgba(212,175,55,0.2);
+    border-radius:50%;
+}
+
+.footer-lotus{
+    margin-top:35px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.floating-svg{
+    width:40px;
+    height:40px;
+    animation:floating 4s ease-in-out infinite;
+}
+
+@keyframes floating{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+        }
+        
     </style>
 </head>
 <body>
@@ -369,6 +562,147 @@ input, textarea, select {
         </div>
 
     </section>
+
+    <!-- Luxury Menu Button -->
+<div class="luxury-menu-btn" onclick="openLuxuryMenu()">
+    <span>☰</span>
+</div>
+
+<!-- Luxury Popup -->
+<div id="luxuryPopup" class="luxury-popup">
+
+    <button class="close-luxury" onclick="closeLuxuryMenu()">✕</button>
+
+    <div class="luxury-wrapper">
+
+        <div class="invitation-container">
+
+            <!-- Corners -->
+            <svg class="corner top-left" viewBox="0 0 100 100">
+                <path d="M0 0 L100 0 L100 2 L2 2 L2 100 L0 100 Z"/>
+            </svg>
+
+            <svg class="corner top-right" viewBox="0 0 100 100">
+                <path d="M0 0 L100 0 L100 2 L2 2 L2 100 L0 100 Z"/>
+            </svg>
+
+            <svg class="corner bottom-left" viewBox="0 0 100 100">
+                <path d="M0 0 L100 0 L100 2 L2 2 L2 100 L0 100 Z"/>
+            </svg>
+
+            <svg class="corner bottom-right" viewBox="0 0 100 100">
+                <path d="M0 0 L100 0 L100 2 L2 2 L2 100 L0 100 Z"/>
+            </svg>
+
+            <p style="font-family:'Cinzel',serif;
+            letter-spacing:6px;
+            font-size:.7rem;
+            color:#996515;
+            text-transform:uppercase;">
+            The Wedding Of
+            </p>
+
+            <div class="lux-divider"></div>
+
+            <div class="monogram">
+
+                <h1 class="gold-text"
+                style="font-family:'Playfair Display',serif;
+                font-size:3rem;
+                line-height:1;
+                margin:0;">
+                Rahul
+                </h1>
+
+                <span style="font-family:'Great Vibes',cursive;
+                font-size:2.5rem;
+                color:#d4af37;">
+                &
+                </span>
+
+                <h1 class="gold-text"
+                style="font-family:'Playfair Display',serif;
+                font-size:3rem;
+                line-height:1;
+                margin:0;">
+                Rupthi
+                </h1>
+
+            </div>
+
+            <p style="font-family:'Montserrat',sans-serif;
+            font-size:.8rem;
+            letter-spacing:2px;
+            color:#555;">
+            WITH GREAT JOY WE INVITE YOU
+            </p>
+
+            <div style="margin:20px 0;">
+
+                <p style="font-family:'Cinzel',serif;
+                color:#996515;">
+                MONDAY
+                </p>
+
+                <h3 style="font-family:'Playfair Display',serif;
+                font-size:2rem;
+                color:#222;">
+                JULY 06, 2026
+                </h3>
+
+                <p style="font-family:'Cinzel',serif;
+                color:#996515;">
+                AT SEVEN O'CLOCK
+                </p>
+
+            </div>
+
+            <div style="margin-top:20px;">
+
+                <p style="font-family:'Playfair Display',serif;
+                font-size:1.1rem;
+                color:#222;">
+                RAJ HOTEL, CHITTAGONG
+                </p>
+
+                <p style="font-family:'Montserrat',sans-serif;
+                font-size:.75rem;
+                color:#777;">
+                Ceremony & Dinner Reception to follow
+                </p>
+
+            </div>
+
+            <div class="footer-lotus">
+
+                <svg class="floating-svg" viewBox="0 0 100 100">
+                    <path fill="#d4af37"
+                    opacity="0.6"
+                    d="M50 10 C65 40 100 50 50 90 C0 50 35 40 50 10 Z"/>
+                </svg>
+
+                <svg class="floating-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="20"
+                    fill="#ffb7c5" opacity="0.5"/>
+                    <path fill="#d4af37"
+                    d="M50 20 L60 50 L50 80 L40 50 Z"
+                    opacity="0.7"/>
+                </svg>
+
+                <svg class="floating-svg"
+                viewBox="0 0 100 100"
+                style="width:50px;height:50px;">
+                    <path fill="#d4af37"
+                    d="M50 5 L70 45 L100 55 L50 95 L0 55 L30 45 Z"/>
+                </svg>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
     <!-- Main Content -->
     <div id="main-content">
@@ -783,6 +1117,21 @@ document.addEventListener("keydown", function(e) {
 
 function scrollToTop() {
     document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+}
+        function openLuxuryMenu(){
+    document
+    .getElementById("luxuryPopup")
+    .classList.add("active");
+
+    document.body.style.overflow = "hidden";
+}
+
+function closeLuxuryMenu(){
+    document
+    .getElementById("luxuryPopup")
+    .classList.remove("active");
+
+    document.body.style.overflow = "auto";
 }
         
     </script>
