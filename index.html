@@ -913,6 +913,15 @@ document.addEventListener("keydown", function(e) {
 function scrollToTop() {
     document.getElementById("home").scrollIntoView({ behavior: "smooth" });
 }
+        function openDesignPage() {
+    document.getElementById("design-page").style.display = "flex";
+    document.body.style.overflow = "hidden";
+}
+
+function closeDesignPage() {
+    document.getElementById("design-page").style.display = "none";
+    document.body.style.overflow = "auto";
+}
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
