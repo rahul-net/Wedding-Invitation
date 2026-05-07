@@ -1278,6 +1278,28 @@ function closeLuxuryMenu(){
     );
 
         }
+        window.addEventListener("scroll", function(){
+
+    const shareBox =
+    document.querySelector(".share-floating");
+
+    const scrollPosition =
+    window.innerHeight + window.scrollY;
+
+    const pageHeight =
+    document.body.offsetHeight;
+
+    if(scrollPosition >= pageHeight - 120){
+
+        shareBox.classList.add("show-share");
+
+    }else{
+
+        shareBox.classList.remove("show-share");
+
+    }
+
+});
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
@@ -1295,7 +1317,7 @@ function closeLuxuryMenu(){
 href="https://www.facebook.com/sharer/sharer.php?u=https://rahul-net.github.io/Wedding-Invitation/"
 target="_blank">
 
-    <i class="fa-brands fa-facebook-f facebook-icon"></i>
+    <i class="fab fa-facebook-f facebook-icon"></i>
 
 </a>
 
@@ -1304,7 +1326,7 @@ target="_blank">
 href="https://wa.me/?text=You're invited ❤️ https://rahul-net.github.io/Wedding-Invitation/"
 target="_blank">
 
-    <i class="fa-brands fa-whatsapp whatsapp-icon"></i>
+    <i class="fab fa-whatsapp whatsapp-icon"></i>
 
 </a>
 
@@ -1313,7 +1335,7 @@ target="_blank">
 href="instagram://share"
 onclick="copyInviteLink()">
 
-    <i class="fa-brands fa-instagram instagram-icon"></i>
+    <i class="fab fa-instagram instagram-icon"></i>
 
 </a>
 
