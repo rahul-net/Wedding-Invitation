@@ -670,6 +670,83 @@ transition: 0.5s ease;
 .instagram-icon{
     color: #E4405F;
 }
+        /* ===== Download Button Premium Animation ===== */
+.download-btn{
+
+    animation:
+    floatDownload 3s ease-in-out infinite,
+    glowDownload 2.5s ease-in-out infinite;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+/* Floating Motion */
+@keyframes floatDownload{
+
+    0%{
+        transform: translateY(0px);
+    }
+
+    50%{
+        transform: translateY(-6px);
+    }
+
+    100%{
+        transform: translateY(0px);
+    }
+}
+
+/* Glow Effect */
+@keyframes glowDownload{
+
+    0%{
+        box-shadow: 0 0 10px rgba(197,160,89,0.2);
+    }
+
+    50%{
+        box-shadow:
+        0 0 20px rgba(197,160,89,0.5),
+        0 0 40px rgba(197,160,89,0.25);
+    }
+
+    100%{
+        box-shadow: 0 0 10px rgba(197,160,89,0.2);
+    }
+}
+
+/* Moving Shine */
+.download-btn::before{
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 60%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.7),
+        transparent
+    );
+
+    transform: skewX(-25deg);
+
+    animation: shineMove 3.5s linear infinite;
+}
+
+@keyframes shineMove{
+
+    100%{
+        left: 160%;
+    }
+}
         
     </style>
 </head>
@@ -1044,7 +1121,7 @@ target="_blank" class="map-btn">
         
         <!-- Bottom Navigation -->
         <section class="bottom-nav">
-            <h2 class="nav-title">RAHUL & RUPTHI</h2>
+            <h2 class="nav-title gold-shine">RAHUL & RUPTHI</h2>
             <p class="nav-tagline">We're getting married!</p>
             <ul class="nav-links">
                 <li><a href="#story">Our Story</a></li>
