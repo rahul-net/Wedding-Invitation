@@ -531,35 +531,32 @@ input, textarea, select {
 
         /* ===== Premium Gold Shimmer ===== */
 .gold-shine{
+
     background: linear-gradient(
         120deg,
-        #8a6a2f 0%,
+        #7a5a20 0%,
         #c5a059 20%,
         #fff2b0 35%,
         #ffffff 50%,
         #fff2b0 65%,
         #c5a059 80%,
-        #8a6a2f 100%
+        #7a5a20 100%
     );
 
-    background-size: 250% auto;
+    background-size: 300% auto;
 
     color: transparent;
 
     -webkit-background-clip: text;
     background-clip: text;
 
-    animation: luxuryShine 5s linear infinite;
-}
+    animation: luxuryShine 4s linear infinite;
 
-@keyframes luxuryShine{
-    0%{
-        background-position: -200% center;
-    }
-    100%{
-        background-position: 200% center;
-    }
+    text-shadow:
+    0 0 8px rgba(197,160,89,0.25),
+    0 0 18px rgba(197,160,89,0.15);
 }
+        
         /* ===== Share Floating ===== */
 .share-floating{
     position: fixed;
