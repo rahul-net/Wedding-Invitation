@@ -613,6 +613,57 @@ input, textarea, select {
     transform: scale(1.12);
     box-shadow: 0 0 20px rgba(197,160,89,0.4);
 }
+        /* Floating Social Animation */
+.share-btn{
+    animation: socialFloat 3s ease-in-out infinite;
+}
+
+.share-btn:nth-child(1){
+    animation-delay: 0s;
+}
+
+.share-btn:nth-child(2){
+    animation-delay: 0.5s;
+}
+
+.share-btn:nth-child(3){
+    animation-delay: 1s;
+}
+
+@keyframes socialFloat{
+
+    0%{
+        transform: translateY(0px);
+    }
+
+    50%{
+        transform: translateY(-6px);
+    }
+
+    100%{
+        transform: translateY(0px);
+    }
+}
+
+/* Brand Colors */
+.facebook-icon{
+    color: #1877f2;
+}
+
+.whatsapp-icon{
+    color: #25D366;
+}
+
+.instagram-icon{
+    color: #E4405F;
+}
+        
+        <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+    </style>
+</head>
+<body>
         
     </style>
 </head>
@@ -1240,25 +1291,31 @@ function closeLuxuryMenu(){
     <div class="share-icons">
 
         <!-- Facebook -->
-        <a class="share-btn"
-        href="https://www.facebook.com/sharer/sharer.php?u=https://rahul-net.github.io/Wedding-Invitation/"
-        target="_blank">
-            f
-        </a>
+<a class="share-btn"
+href="https://www.facebook.com/sharer/sharer.php?u=https://rahul-net.github.io/Wedding-Invitation/"
+target="_blank">
 
-        <!-- WhatsApp -->
-        <a class="share-btn"
-        href="https://wa.me/?text=You're invited ❤️ https://rahul-net.github.io/Wedding-Invitation/"
-        target="_blank">
-            ✆
-        </a>
+    <i class="fa-brands fa-facebook-f facebook-icon"></i>
 
-        <!-- Instagram -->
-        <a class="share-btn"
-        href="instagram://share"
-        onclick="copyInviteLink()">
-            ◎
-        </a>
+</a>
+
+<!-- WhatsApp -->
+<a class="share-btn"
+href="https://wa.me/?text=You're invited ❤️ https://rahul-net.github.io/Wedding-Invitation/"
+target="_blank">
+
+    <i class="fa-brands fa-whatsapp whatsapp-icon"></i>
+
+</a>
+
+<!-- Instagram -->
+<a class="share-btn"
+href="instagram://share"
+onclick="copyInviteLink()">
+
+    <i class="fa-brands fa-instagram instagram-icon"></i>
+
+</a>
 
     </div>
 
