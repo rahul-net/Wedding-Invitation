@@ -747,6 +747,70 @@ transition: 0.5s ease;
         left: 160%;
     }
 }
+        /* ===== Ganesh Blessing ===== */
+.ganesh-blessing{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: -5px;
+
+    margin-bottom: 12px;
+
+    animation: ganeshFloat 4s ease-in-out infinite;
+}
+
+.ganesh-img{
+
+    width: 65px;
+
+    max-width: 22%;
+
+    object-fit: contain;
+
+    filter:
+    drop-shadow(0 0 8px rgba(197,160,89,0.28));
+
+    margin-bottom: 6px;
+
+    opacity: 0.95;
+}
+
+.ganesh-text{
+
+    font-family: 'Great Vibes', cursive;
+
+    font-size: 1.2rem;
+
+    color: #f1d592;
+
+    text-align: center;
+
+    text-shadow:
+    0 0 8px rgba(197,160,89,0.22);
+
+    letter-spacing: 1px;
+}
+
+@keyframes ganeshFloat{
+
+    0%{
+        transform: translateY(0px);
+    }
+
+    50%{
+        transform: translateY(-4px);
+    }
+
+    100%{
+        transform: translateY(0px);
+    }
+}
         
     </style>
 </head>
@@ -929,6 +993,18 @@ transition: 0.5s ease;
     <div id="main-content">
         <!-- Home Section -->
         <section id="home" class="section">
+            <!-- Ganesh Blessing -->
+<div class="ganesh-blessing">
+
+    <img src="ganeshGold.png"
+    alt="Lord Ganesha"
+    class="ganesh-img">
+
+    <p class="ganesh-text">
+        Om Shree Ganeshay Namah
+    </p>
+
+</div>
             <h1 class="names gold-shine">Rahul & Rupthi</h1>
             <h3>Wedding Ceremony</h3>
             <div class="divider"></div>
