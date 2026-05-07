@@ -1380,12 +1380,36 @@ function openInvite() {
             let isDrawing = false;
             let scratchedCount = 0;
 
-            const handleScratch = (x, y) => {
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 25, 0, Math.PI * 2); ctx.fill();
-                scratchedCount++;
-                if(scratchedCount > 60) showModal();
-            };
+            cconst handleScratch = (x, y) => {
+
+    /* Hide finger guide after first scratch */
+    const guide =
+    document.querySelector(".scratch-guide");
+
+    if(guide){
+        guide.style.opacity = "0";
+        guide.style.transition = "0.4s ease";
+
+        setTimeout(() => {
+            guide.style.display = "none";
+        }, 400);
+    }
+
+    ctx.globalCompositeOperation =
+    'destination-out';
+
+    ctx.beginPath();
+
+    ctx.arc(x, y, 25, 0, Math.PI * 2);
+
+    ctx.fill();
+
+    scratchedCount++;
+
+    if(scratchedCount > 60){
+        showModal();
+    }
+};
 
             const getPos = (e) => {
                 const rect = canvas.getBoundingClientRect();
