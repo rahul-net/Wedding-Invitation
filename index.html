@@ -895,6 +895,43 @@ transition: 0.5s ease;
         filter: drop-shadow(0 0 0px rgba(255,255,255,0));
     }
 }
+        /* ===== Guest Photo Upload ===== */
+.upload-card{
+    background: var(--glass);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(197,160,89,0.2);
+}
+
+.upload-input{
+    width: 100%;
+    padding: 14px;
+    border: 1px dashed rgba(197,160,89,0.5);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    color: white;
+    margin-top: 15px;
+}
+
+.upload-btn{
+    width: 100%;
+    margin-top: 18px;
+    background: linear-gradient(45deg,#c5a059,#f1d592);
+    color: #000;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+}
+
+.upload-status{
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    min-height: 20px;
+}
         
     </style>
 </head>
@@ -1273,6 +1310,33 @@ target="_blank" class="map-btn">
                 </button>
             </div>
         </section>
+
+        <!-- Guest Upload -->
+<section id="guest-upload" class="section">
+    <h3>Share Your Wedding Photos</h3>
+    <div class="divider"></div>
+
+    <div class="upload-card">
+        <p style="font-size:0.9rem; opacity:0.8;">
+            Upload your beautiful wedding memories 📸
+        </p>
+
+        <input
+            type="file"
+            id="guestPhotos"
+            class="upload-input"
+            accept="image/*"
+            multiple
+        >
+
+        <button class="upload-btn" onclick="uploadGuestPhotos()">
+            Upload Photos
+        </button>
+
+        <div id="uploadStatus" class="upload-status"></div>
+    </div>
+</section>
+        
         <!-- Download Invitation -->
 <section id="download" class="section">
     <h3>Download Invitation</h3>
@@ -1582,6 +1646,70 @@ function closeLuxuryMenu(){
     );
 
         }
+        async function uploadGuestPhotos() {
+    const input = document.getElementById("guestPhotos");
+    const status = document.getElementById("uploadStatus");
+
+    if (!input.files.length) {
+        status.innerText = "Please select photos first.";
+        return;
+    }
+
+    status.innerText = "Preparing upload...";
+
+    const files = Array.from(input.files);
+
+    for (const file of files) {
+        if (!file.type.startsWith("image/")) {
+            status.innerText = "Only image files allowed.";
+            return;
+        }
+
+        if (file.size > 8 * 1024 * 1024) {
+            status.innerText = "Each image must be below 8MB.";
+            return;
+        }
+    }
+
+    try {
+        for (let i = 0; i < files.length; i++) {
+            status.innerText = `Uploading ${i + 1} of ${files.length}...`;
+
+            const file = files[i];
+
+            const base64 = await toBase64(file);
+
+            await fetch("https://script.google.com/macros/s/AKfycbwTEqtugqBWlmiw6fLu7Jld2WhcXO9JRLPVKdFwkXl_GAMONq1V-jYBR0RFsAnukpW5/exec", {
+                method: "POST",
+                body: JSON.stringify({
+                    name: file.name,
+                    mimeType: file.type,
+                    data: base64
+                })
+            });
+        }
+
+        status.innerText = "Upload successful ❤️";
+        input.value = "";
+
+    } catch (e) {
+        status.innerText = "Upload failed. Try again.";
+        console.error(e);
+    }
+}
+
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            resolve(reader.result.split(",")[1]);
+        };
+
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
         
     </script>
     <button id="topBtn" onclick="scrollToTop()">Go to Top</button>
