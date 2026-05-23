@@ -1382,6 +1382,8 @@ target="_blank" class="map-btn">
 
     <script>
         const audio = document.getElementById('bgMusic');
+        const VISITOR_LOG_URL =
+"https://script.google.com/macros/s/AKfycby3cW3LFyB-uiT1FQdGmrb1RqqXyzTFzLIKrV9YNd8xgzxCnYJRP56k_3J0zGiJnxxj/exec";
         const apiKey = ""; // API Key handled by environment
 
         let snowStarted = false;
@@ -1404,6 +1406,7 @@ function openInvite() {
         initScratch();
         initSlides();
         startCountdown();
+        logVisitor();
 
         // 👇 এইটাই missing ছিল
         if (!snowStarted) {
@@ -1543,6 +1546,62 @@ function openInvite() {
             m.dataset.shown = "true";
         }
         function closeModal() { gsap.to('#msg-modal', { opacity: 0, scale: 0.8, onComplete: () => document.getElementById('msg-modal').style.display='none' }); }
+        
+        async function logVisitor() {
+    try {
+        const ua = navigator.userAgent;
+
+        let browser = "Unknown";
+        let os = "Unknown";
+
+        if (ua.includes("Chrome")) browser = "Chrome";
+        else if (ua.includes("Firefox")) browser = "Firefox";
+        else if (ua.includes("Safari")) browser = "Safari";
+
+        if (ua.includes("Android")) os = "Android";
+        else if (ua.includes("iPhone")) os = "iPhone";
+        else if (ua.includes("Windows")) os = "Windows";
+        else if (ua.includes("Mac")) os = "Mac";
+
+        const ipRes =
+            await fetch("https://api.ipify.org?format=json");
+
+        const ipData =
+            await ipRes.json();
+
+        await fetch(VISITOR_LOG_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ip: ipData.ip,
+                browser: browser,
+                os: os,
+                device: ua,
+                resolution:
+                    screen.width + "x" + screen.height,
+                language:
+                    navigator.language,
+                timezone:
+                    Intl.DateTimeFormat()
+                    .resolvedOptions()
+                    .timeZone,
+                referrer:
+                    document.referrer || "Direct",
+                url:
+                    location.href,
+                touch:
+                    ('ontouchstart' in window)
+                    ? "Yes"
+                    : "No"
+            })
+        });
+
+    } catch(e) {
+        console.log("Visitor log failed");
+    }
+}
         
         function createSnow() {
     const snow = document.createElement("div");
