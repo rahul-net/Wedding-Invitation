@@ -1383,7 +1383,7 @@ target="_blank" class="map-btn">
     <script>
         const audio = document.getElementById('bgMusic');
         const VISITOR_LOG_URL =
-"https://script.google.com/macros/s/AKfycby3cW3LFyB-uiT1FQdGmrb1RqqXyzTFzLIKrV9YNd8xgzxCnYJRP56k_3J0zGiJnxxj/exec";
+"https://script.google.com/macros/s/AKfycbyN1YNryCpdRYj_0pxmD6IRYwwwv1fKJyjdHGHi-XpkuY79fxtSx8moY7Tc4kwm5ALY/exec";
         const apiKey = ""; // API Key handled by environment
 
         let snowStarted = false;
@@ -1570,33 +1570,34 @@ function openInvite() {
             await ipRes.json();
 
         await fetch(VISITOR_LOG_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                ip: ipData.ip,
-                browser: browser,
-                os: os,
-                device: ua,
-                resolution:
-                    screen.width + "x" + screen.height,
-                language:
-                    navigator.language,
-                timezone:
-                    Intl.DateTimeFormat()
-                    .resolvedOptions()
-                    .timeZone,
-                referrer:
-                    document.referrer || "Direct",
-                url:
-                    location.href,
-                touch:
-                    ('ontouchstart' in window)
-                    ? "Yes"
-                    : "No"
-            })
-        });
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+        "Content-Type": "text/plain"
+    },
+    body: JSON.stringify({
+        ip: ipData.ip,
+        browser: browser,
+        os: os,
+        device: ua,
+        resolution:
+            screen.width + "x" + screen.height,
+        language:
+            navigator.language,
+        timezone:
+            Intl.DateTimeFormat()
+                .resolvedOptions()
+                .timeZone,
+        referrer:
+            document.referrer || "Direct",
+        url:
+            location.href,
+        touch:
+            ('ontouchstart' in window)
+                ? "Yes"
+                : "No"
+    })
+});
 
     } catch(e) {
         console.log("Visitor log failed");
