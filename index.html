@@ -54,6 +54,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     100% { opacity: 0.3; }
 }
 
+
+
         /* --- Music Controller --- */
         .music-toggle {
             position: fixed; top: 20px; right: 20px; z-index: 3000;
@@ -261,11 +263,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         
         /* --- Bttom Navigation --- */
         .bottom-nav {
-            background: var(--dark-green);
-            padding: 80px 20px 60px;
-            border-top: 1px solid rgba(197,160,89,0.1);
-            margin-top: 50px;
-        }
+    background: var(--dark-green);
+    padding: 80px 20px 60px;
+    border-top: 1px solid rgba(197,160,89,0.1);
+    margin-top: 50px;
+
+    position: relative;
+    z-index: 2;
+}
+.bottom-nav {
+    background: var(--dark-green);
+    padding: 80px 20px 60px;
+    border-top: 1px solid rgba(197,160,89,0.1);
+    margin-top: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bottom-petals {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.nav-title,
+.nav-tagline,
+.nav-links,
+.bottom-nav footer {
+    position: relative;
+    z-index: 3;
+}
         .nav-title { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; letter-spacing: 4px; margin-bottom: 5px; }
         .nav-tagline { font-size: 0.9rem; color: var(--gold-light); font-style: italic; margin-bottom: 40px; }
         .nav-links { list-style: none; padding: 0; }
@@ -281,30 +309,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
             box-shadow: 0 0 100px rgba(0,0,0,0.8);
         }
         
-        /* --- Snowfall Effect --- */
-.snowflake {
+        /* --- Flowerfall Effect --- */
+.petal {
     position: fixed;
-    top: -10px;
-    color: rgba(255,255,255,0.7);
-    font-size: 10px;
+    top: -50px;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
     user-select: none;
-
-    animation-name: fall;
+    opacity: 0.9;
+    will-change: transform;
     animation-timing-function: linear;
-
-    opacity: 0.6;
-    filter: blur(0.5px);
 }
-        @keyframes fall {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(110vh);
-    }
-        }
         
         /* Disable text selection */
 body {
@@ -895,6 +910,28 @@ transition: 0.5s ease;
         filter: drop-shadow(0 0 0px rgba(255,255,255,0));
     }
 }
+
+@keyframes fall {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate3d(25px, 25vh, 0) rotate(90deg);
+    }
+
+    50% {
+        transform: translate3d(-20px, 50vh, 0) rotate(180deg);
+    }
+
+    75% {
+        transform: translate3d(30px, 75vh, 0) rotate(270deg);
+    }
+
+    100% {
+        transform: translate3d(-10px, 110vh, 0) rotate(360deg);
+    }
+}
         /* ===== Guest Photo Upload ===== */
 .upload-card{
     background: var(--glass);
@@ -944,30 +981,29 @@ transition: 0.5s ease;
 <div id="musicBtn" class="music-toggle" onclick="toggleMusic()">🔊</div>
 
     <!-- Entrance Section -->
-    <section id="entrance" class="royal-intro" onclick="openInvite()">
+
+        <section id="entrance" class="royal-intro" onclick="openInvite()">
 
     <div class="card">
 
-        <!-- Top ornament (optional image) -->
         <div class="ornament">💍</div>
 
-        <!-- Names -->
         <h1 class="names gold-shine">
             Rahul <span>and</span> Rupthi
         </h1>
 
-        <!-- Sub text -->
         <p class="invite-text gold-shine">
             invite you to celebrate their Wedding
         </p>
 
-        <!-- Bottom circle button -->
         <div class="enter-wrap">
-    <div class="enter-btn">●</div>
-    <p class="tap-text">Tap to Open</p>
+            <div class="enter-btn">●</div>
+            <p class="tap-text">Tap to Open</p>
         </div>
 
-    </section>
+    </div>
+
+</section>
 
     <!-- Luxury Menu Button -->
 <div class="luxury-menu-btn" onclick="openLuxuryMenu()">
@@ -1178,9 +1214,10 @@ decoding="async">
             <h3>Our Story</h3>
             <div class="divider"></div>
             <div style="background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid rgba(197, 160, 89, 0.2); text-align: left;">
-                <p style="font-size: 0.95rem; line-height: 1.8; color: #eee; font-style: italic;">
-                    "আমাদের পরিচয়ের সেই সুন্দর দিনটি আজ এক নতুন অধ্যায়ে পদার্পণ করছে। আমাদের এই পথচলায় আপনার আশীর্বাদ ও উপস্থিতি কামনা করি।"
-                </p>
+                <p
+    id="storyText"
+    style="font-size: 0.95rem; line-height: 1.8; color: #eee; font-style: italic; min-height: 90px;">
+</p>
                 <div style="text-align: right; margin-top: 15px; color: var(--gold); font-family: 'Great Vibes'; font-size: 1.5rem;">
                     — Love, Rahul & Rupthi
                 </div>
@@ -1220,9 +1257,11 @@ decoding="async">
         </section>
 
             <a href="https://www.google.com/maps/search/?api=1&query=Raj+Hotel+Chittagong" 
-target="_blank" class="map-btn">
+target="_blank"
+class="map-btn"
+onclick="trackClick('Map')">
     📍 Get Directions
-            </a>
+</a>
 
         <!-- Scratch Surprise -->
         <section class="section">
@@ -1245,13 +1284,13 @@ target="_blank" class="map-btn">
             </div>
         </section>
 
-            <section class="section">
+            <section id="blessings" class="section">
     <h3>Blessings</h3>
     <div class="divider"></div>
-    <p style="font-size:0.9rem;">
-        Your presence is the greatest gift.  
-        Blessings are more than enough ❤️
-    </p>
+    <p
+    id="blessingText"
+    style="font-size:0.9rem; min-height:60px;">
+</p>
             </section>
 
         <!-- Instagram -->
@@ -1305,7 +1344,7 @@ target="_blank" class="map-btn">
                     <textarea id="guestMsg" rows="3" placeholder="আপনার মনের কথা এখানে লিখুন..."></textarea>
                 </div>
 
-                <button class="btn-send" onclick="sendToWhatsApp()">
+                <button class="btn-send" onclick="trackClick('RSVP'); sendToWhatsApp()">
                     <span>Send via WhatsApp</span>
                 </button>
             </div>
@@ -1348,15 +1387,19 @@ target="_blank" class="map-btn">
             Download our wedding invitation card and keep it with you ❤️
         </p>
 
-        <a href="Invitation_Card.png" download class="download-btn">
-            📥 Download Card
-        </a>
+        <a href="Invitation_Card.png"
+   download
+   class="download-btn"
+   onclick="trackClick('Download')">
+    📥 Download Card
+</a>
 
     </div>
 </section>
         
         <!-- Bottom Navigation -->
         <section class="bottom-nav">
+        <div class="bottom-petals"></div>
             <h2 class="nav-title gold-shine">RAHUL & RUPTHI</h2>
             <p class="nav-tagline">We're getting married!</p>
             <ul class="nav-links">
@@ -1383,10 +1426,62 @@ target="_blank" class="map-btn">
     <script>
         const audio = document.getElementById('bgMusic');
         const VISITOR_LOG_URL =
-"https://script.google.com/macros/s/AKfycbyN1YNryCpdRYj_0pxmD6IRYwwwv1fKJyjdHGHi-XpkuY79fxtSx8moY7Tc4kwm5ALY/exec";
+"https://script.google.com/macros/s/AKfycbzY-Cqgksve3QyLf8qiJwOtS_3KDgSLpGrZUGIBlJzRQT6YFX3yfCiZ5eecQ0ykYepY/exec";
         const apiKey = ""; // API Key handled by environment
 
         let snowStarted = false;
+        
+       function typeStoryText() {
+    const target =
+        document.getElementById("storyText");
+
+    if (!target) return;
+
+    if (target.dataset.started === "true") return;
+
+    target.dataset.started = "true";
+
+    const text =
+        "আমাদের পরিচয়ের সেই সুন্দর দিনটি আজ এক নতুন অধ্যায়ে পদার্পণ করছে। আমাদের এই পথচলায় আপনার আশীর্বাদ ও উপস্থিতি কামনা করি।";
+
+    let index = 0;
+
+    function type() {
+        if (index < text.length) {
+            target.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 55);
+        }
+    }
+
+    type();
+}
+
+function typeBlessingText() {
+    const target =
+        document.getElementById("blessingText");
+
+    if (!target) return;
+
+    if (target.dataset.started === "true") return;
+
+    target.dataset.started = "true";
+
+    const text =
+        "Your presence is the greatest gift. Blessings are more than enough ❤️";
+
+    let index = 0;
+
+    function type() {
+        if (index < text.length) {
+            target.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 45);
+        }
+    }
+
+    type();
+}
 
 function openInvite() {
 
@@ -1410,7 +1505,7 @@ function openInvite() {
 
         // 👇 এইটাই missing ছিল
         if (!snowStarted) {
-            setInterval(createSnow, 250);
+            setInterval(createSnow, 700);
             snowStarted = true;
         }
 
@@ -1547,7 +1642,57 @@ function openInvite() {
         }
         function closeModal() { gsap.to('#msg-modal', { opacity: 0, scale: 0.8, onComplete: () => document.getElementById('msg-modal').style.display='none' }); }
         
-        async function logVisitor() {
+        let visitStartTime = Date.now();
+let maxScrollDepth = 0;
+let clickEvents = [];
+
+function trackClick(name) {
+    if (!clickEvents.includes(name)) {
+        clickEvents.push(name);
+    }
+}
+
+window.addEventListener("scroll", () => {
+    const scrollTop = window.scrollY;
+    const docHeight =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+    if (docHeight > 0) {
+        const percent =
+            Math.round((scrollTop / docHeight) * 100);
+
+        if (percent > maxScrollDepth) {
+            maxScrollDepth = percent;
+        }
+    }
+    
+    const story =
+    document.getElementById("story");
+
+if (story) {
+    const rect = story.getBoundingClientRect();
+
+    if (rect.top < window.innerHeight - 120) {
+        typeStoryText();
+    }
+}
+
+const blessings =
+    document.getElementById("blessings");
+
+if (blessings) {
+    const rect =
+        blessings.getBoundingClientRect();
+
+    if (rect.top < window.innerHeight - 120) {
+        typeBlessingText();
+    }
+}
+
+});
+
+async function sendVisitorLog(sessionEnded = "No") {
     try {
         const ua = navigator.userAgent;
 
@@ -1569,63 +1714,106 @@ function openInvite() {
         const ipData =
             await ipRes.json();
 
-        await fetch(VISITOR_LOG_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-        "Content-Type": "text/plain"
-    },
-    body: JSON.stringify({
-        ip: ipData.ip,
-        browser: browser,
-        os: os,
-        device: ua,
-        resolution:
-            screen.width + "x" + screen.height,
-        language:
-            navigator.language,
-        timezone:
-            Intl.DateTimeFormat()
-                .resolvedOptions()
-                .timeZone,
-        referrer:
-            document.referrer || "Direct",
-        url:
-            location.href,
-        touch:
-            ('ontouchstart' in window)
-                ? "Yes"
-                : "No"
-    })
-});
+        const totalSeconds =
+            Math.floor((Date.now() - visitStartTime) / 1000);
 
-    } catch(e) {
-        console.log("Visitor log failed");
+        const minutes =
+            Math.floor(totalSeconds / 60);
+
+        const seconds =
+            totalSeconds % 60;
+
+        const timeSpent =
+            minutes + "m " + seconds + "s";
+
+        await fetch(VISITOR_LOG_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain"
+            },
+            body: JSON.stringify({
+                ip: ipData.ip,
+                timeSpent: timeSpent,
+                scrollDepth: maxScrollDepth + "%",
+                browser: browser,
+                os: os,
+                device: ua,
+                resolution:
+                    screen.width + "x" + screen.height,
+                language:
+                    navigator.language,
+                timezone:
+                    Intl.DateTimeFormat()
+                        .resolvedOptions()
+                        .timeZone,
+                referrer:
+                    document.referrer || "Direct",
+                url:
+                    location.href,
+                touch:
+                    ('ontouchstart' in window)
+                        ? "Yes"
+                        : "No",
+                clickEvents:
+                    clickEvents.join(", "),
+                sessionEnd:
+                    sessionEnded
+            })
+        });
+
+    } catch (e) {
+        console.log(e);
     }
 }
+
+function logVisitor() {
+    sendVisitorLog("No");
+}
+
+window.addEventListener("pagehide", function () {
+    sendVisitorLog("Yes");
+});
         
         function createSnow() {
-    const snow = document.createElement("div");
-    snow.classList.add("snowflake");
-    snow.innerText = "❄";
+    const petal = document.createElement("div");
 
-    // random horizontal position
-    snow.style.left = Math.random() * window.innerWidth + "px";
+    petal.classList.add("petal");
 
-    // random size
-    const size = Math.random() * 10 + 5;
-    snow.style.fontSize = size + "px";
+    const petals = ["🌸", "🌺"];
 
-    // random duration
-    const duration = Math.random() * 5 + 5;
-    snow.style.animationDuration = duration + "s";
+    petal.innerText =
+        petals[Math.floor(Math.random() * petals.length)];
 
-    document.body.appendChild(snow);
+    petal.style.left =
+        Math.random() * window.innerWidth + "px";
 
-    // remove after animation
-    setTimeout(() => {
-        snow.remove();
-    }, duration * 1000);
+    const size =
+        Math.random() * 10 + 10;
+
+    petal.style.fontSize =
+        size + "px";
+
+    const duration =
+        Math.random() * 6 + 8;
+
+    petal.style.animation =
+        `fall ${duration}s linear forwards`;
+
+    petal.style.opacity =
+        Math.random() * 0.5 + 0.5;
+
+    const bottomArea = document.querySelector(".bottom-petals");
+
+if (bottomArea && window.scrollY > 2500) {
+    bottomArea.appendChild(petal);
+} else {
+    document.getElementById("main-content").appendChild(petal);
+}
+
+setTimeout(() => {
+    petal.remove();
+}, duration * 1000);
 }
 
         
@@ -1725,19 +1913,20 @@ function closeLuxuryMenu(){
             return;
         }
 
-        if (file.size > 8 * 1024 * 1024) {
-            status.innerText = "Each image must be below 8MB.";
-            return;
-        }
+        if (file.size > 25 * 1024 * 1024) {
+    status.innerText = "Each image must be below 25MB.";
+    return;
+}
     }
 
     try {
         for (let i = 0; i < files.length; i++) {
-            status.innerText = `Uploading ${i + 1} of ${files.length}...`;
+            status.innerText = `Optimizing & uploading ${i + 1} of ${files.length}...`;
 
             const file = files[i];
 
-            const base64 = await toBase64(file);
+            const optimizedFile = await compressImage(file);
+const base64 = await toBase64(optimizedFile);
 
             await fetch("https://script.google.com/macros/s/AKfycbybIHFolkAUsydnObTyU6j5KBpfzIHIdfMfz6Wj1fBCJpCfpffyEXloi6nNLHvvv_tbPQ/exec", {
                 method: "POST",
@@ -1756,6 +1945,51 @@ function closeLuxuryMenu(){
         status.innerText = "Upload failed. Try again.";
         console.error(e);
     }
+}
+
+async function compressImage(file) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            img.src = e.target.result;
+        };
+
+        reader.onerror = reject;
+
+        img.onload = function() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            let width = img.width;
+            let height = img.height;
+
+            const maxWidth = 1600;
+
+            if (width > maxWidth) {
+                height = height * (maxWidth / width);
+                width = maxWidth;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob(
+                (blob) => {
+                    resolve(blob);
+                },
+                file.type.includes("png") ? "image/png" : "image/jpeg",
+0.8
+            );
+        };
+
+        img.onerror = reject;
+
+        reader.readAsDataURL(file);
+    });
 }
 
 function toBase64(file) {
