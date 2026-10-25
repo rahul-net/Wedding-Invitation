@@ -1,0 +1,19 @@
+{
+  "images": [
+    {
+      "url": "https://images.unsplash.com/photo-1777554800812-3dff04d85db0?auto=format&fit=crop&w=800&q=80",
+      "mode": "default",
+      "slot": 1
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1777554972735-c23d34f58a81?auto=format&fit=crop&w=800&q=80",
+      "mode": "default",
+      "slot": 2
+    },
+    {
+      "url": "https://rahul-net.github.io/Wedding-Invitation/CP1.jpg",
+      "mode": "default",
+      "slot": 3
+    }
+  ]
+}
